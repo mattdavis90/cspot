@@ -71,6 +71,11 @@ int main(int argc, char** argv)
             CSPOT_LOG(error, "Config error");
         }
 
+        if (!args->deviceName.empty())
+        {
+            configMan->deviceName = args->deviceName;
+        }
+
         auto createPlayerCallback = [](std::shared_ptr<LoginBlob> blob) {
             CSPOT_LOG(info, "Creating player");
             auto session = std::make_unique<Session>();

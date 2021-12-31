@@ -1,16 +1,16 @@
 #include "CommandLineArguments.h"
 #include "ProtoHelper.h"
 
-CommandLineArguments::CommandLineArguments(std::string u, std::string p, bool shouldShowHelp) : username(u), password(p), shouldShowHelp(shouldShowHelp) {}
+CommandLineArguments::CommandLineArguments(std::string u, std::string p, std::string d, bool shouldShowHelp) : username(u), password(p), deviceName(d), shouldShowHelp(shouldShowHelp) {}
 
 std::shared_ptr<CommandLineArguments> CommandLineArguments::parse(int argc, char **argv)
 {
 
     if (argc == 1)
     {
-        return std::make_shared<CommandLineArguments>("", "", false);
+        return std::make_shared<CommandLineArguments>("", "", "", false);
     }
-    auto result = std::make_shared<CommandLineArguments>("", "", false);
+    auto result = std::make_shared<CommandLineArguments>("", "", "", false);
     for (int i = 1; i < argc; i++)
     {
         auto stringVal = std::string(argv[i]);
@@ -20,6 +20,7 @@ std::shared_ptr<CommandLineArguments> CommandLineArguments::parse(int argc, char
         {
             result->username = "";
             result->password = "";
+            result->deviceName = "";
             result->shouldShowHelp = true;
             return result;
         }
@@ -39,6 +40,14 @@ std::shared_ptr<CommandLineArguments> CommandLineArguments::parse(int argc, char
                 throw std::invalid_argument("expected path after the password flag");
             }
             result->password = std::string(argv[++i]);
+        }
+        else if (stringVal == "-d" || stringVal == "--device-name")
+        {
+            if (i >= argc - 1)
+            {
+                throw std::invalid_argument("expected name after the device-name flag");
+            }
+            result->deviceName = std::string(argv[++i]);
         }
         else if (stringVal == "-b" || stringVal == "--bitrate")
         {

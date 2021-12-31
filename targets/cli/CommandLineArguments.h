@@ -20,6 +20,10 @@ public:
     */
     std::string password;
     /**
+     * Device name.
+    */
+    std::string deviceName;
+    /**
      * Bitrate setting.
     */
     bool setBitrate = false;
@@ -32,7 +36,7 @@ public:
      * This is a constructor which initializez all the fields of CommandLineArguments
      * @param shouldShowHelp determines whether the help text should be printed.
      */
-    CommandLineArguments(std::string username, std::string password, bool shouldShowHelp);
+    CommandLineArguments(std::string username, std::string password, std::string deviceName, bool shouldShowHelp);
 
     /**
      * Parses command line arguments, as they are passed to main().
